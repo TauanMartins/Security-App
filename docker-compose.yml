@@ -1,0 +1,40 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: .devops/dev/php/Dockerfile
+    working_dir: "/app"
+    user: "8000:18000"  
+    volumes:
+      - ./system:/app
+      - php-socket:/socket
+    environment:
+      PS1: "\\u@\\h:\\w\\$$ "
+    restart: on-failure
+  # queue-worker:
+  #   build:
+  #     context: .
+  #     dockerfile: .devops/dev/php/Dockerfile
+  #   working_dir: "/app"    
+  #   user: "8000:18000"  
+  #   volumes:
+  #     - ./system:/app
+  #   command: ["php", "artisan", "queue:listen", "--tries=3"]
+  #   restart: on-failure
+  nginx:
+    build:
+      context: .
+      dockerfile: .devops/dev/nginx/Dockerfile
+    working_dir: "/app"
+    user: "8000:18000" 
+    volumes:
+      - php-socket:/socket
+    ports:
+      - "8000:80"
+    environment:
+      PS1: "\\u@\\h:\\w\\$$ "
+    depends_on:
+      - php
+    restart: on-failure
+volumes:
+  php-socket: 
