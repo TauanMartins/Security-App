@@ -8,8 +8,8 @@ COPY .devops/dev/nginx/inis/nginx.conf /etc/nginx/nginx.conf
 RUN rm docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
 
 # Configurar usuário e grupo para execução
-RUN addgroup -g 18081 -S user \
-    && adduser -u 8081 -S -G user user
+RUN addgroup -g 18000 -S user \
+    && adduser -u 8000 -S -G user user
 
 # Ajustar permissões para o diretório da aplicação
 RUN chown -R user:user /app

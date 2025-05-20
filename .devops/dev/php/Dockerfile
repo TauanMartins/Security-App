@@ -1,5 +1,5 @@
 # Build stage: Composer
-FROM composer:2.8.8 AS composer
+FROM composer:2.8.9 AS composer
 WORKDIR /application
 
 # Copiar apenas os arquivos necessários para instalar dependências
